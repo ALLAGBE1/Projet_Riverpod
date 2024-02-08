@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyNotifier extends Notifier<int> {
-  int _counter = 0;
+class MyNotifier extends StateNotifier<int> {
+  MyNotifier() : super(0);
 
-  @override
-  int build() => 0;
-
-  void increment() => _counter++;
+  void increment() {
+    state++;
+  }
 }
 
-final counterNotifierProvider = NotifierProvider<MyNotifier, int>(MyNotifier.new);
+final counterNotifierProvider = StateNotifierProvider<MyNotifier, int>((ref) {
+  return MyNotifier();
+});

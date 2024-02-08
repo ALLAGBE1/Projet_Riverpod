@@ -52,7 +52,6 @@ class MyHomePage extends StatelessWidget {
       floatingActionButton: Consumer(
         builder: (BuildContext context, WidgetRef ref, ___) {
           return FloatingActionButton(
-            // onPressed: incretment,
             onPressed: () {
               ref.read(counterNotifierProvider.notifier).increment();
             },
