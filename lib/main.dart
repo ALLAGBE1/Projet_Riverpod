@@ -41,9 +41,9 @@ class MyHomePage extends StatelessWidget {
               'You have pushed the button this many times:',
             ),
             Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) { 
-                Text(
-                  ref.read(MyNotifier()),
+              builder: (BuildContext context, WidgetRef ref, _) { 
+                return Text(
+                  ref.read(counterNotifierProvider as ProviderListenable<String>),
                 // '$_counter',
                 style: Theme.of(context).textTheme.headlineMedium,
               );
@@ -57,7 +57,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: ref.,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

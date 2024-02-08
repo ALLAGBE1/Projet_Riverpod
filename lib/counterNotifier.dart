@@ -10,6 +10,7 @@ class MyNotifier extends Notifier<int> {
   int build() => 0;
 
   void increment() => _counter++;
+  
 }
 
 final counterNotifierProvider = NotifierProvider<MyNotifier, int>(MyNotifier.new);
