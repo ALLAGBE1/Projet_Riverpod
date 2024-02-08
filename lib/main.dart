@@ -56,21 +56,17 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ref.,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Consumer(
+        builder: (BuildContext context, WidgetRef ref, ___) {  
+          FloatingActionButton(
+            onPressed: ref.,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          );
+        },
       ),
     );
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
 
