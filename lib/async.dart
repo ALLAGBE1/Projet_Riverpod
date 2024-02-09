@@ -11,11 +11,12 @@ class NotifierAsync extends AsyncNotifier<int> {
   }
 
   Future<void> addition() async {
-    state = await AsyncValue.guard(() async {
-      await Future.delayed(const Duration(minutes: 5));
-      final add = ref.watch(getAdditionProvider);
-      return add;
+    state = const AsyncLoading();
+    final add = await AsyncValue.guard(() async {
+      await Future.delayed(const Duration(seconds: 3));
+      return ref.watch(getAdditionProvider);
     });
+    state = add;
   }
 }
 

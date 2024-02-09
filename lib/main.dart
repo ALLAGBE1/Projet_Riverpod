@@ -11,6 +11,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
 
   // This widget is the root of your application.
   @override
@@ -28,6 +29,13 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+    
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,12 +115,18 @@ class MyHomePage extends ConsumerWidget {
             Consumer(builder: (context, ref, _) {
               return ref.watch(asynProvider).when(
                   data: (data) {
-                    final add1 = ref.watch(getAdditionProvider);
-                    return Text('$add1');
+                    return Text('$data');
                   },
-                  error: (error, StackTrace) => const Text("C'est une erreur"),
+                  error: (error, stackTrace) => const Text("C'est une erreur"),
                   loading: () => const Loading());
-            })
+            }),
+            Consumer(builder: (_, ref, __) {
+              return ElevatedButton(
+                  onPressed: () {
+                    ref.read(asynProvider.notifier).addition();
+                  },
+                  child: const Text("Result"));
+            }),
           ],
         ),
       ),

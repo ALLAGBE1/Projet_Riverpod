@@ -7,7 +7,7 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     // throw UnimplementedError();
-    return const LinearProgressIndicator(
+    return const CircularProgressIndicator(
       color: Colors.red,
     );
   }
