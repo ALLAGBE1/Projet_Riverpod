@@ -6,7 +6,6 @@ import 'package:projet_riverpod/counterNotifier.dart';
 class NotifierAsync extends AsyncNotifier<int> {
   @override
   FutureOr<int> build() {
-    state = const AsyncLoading();
     return 0;
   }
 

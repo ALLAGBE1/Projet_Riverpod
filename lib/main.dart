@@ -11,7 +11,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
 
   // This widget is the root of your application.
   @override
@@ -30,15 +29,14 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
 
-  // @override
-  // void initState() {
-  //   super.initState();
-
-    
-  // }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ref.listen(asynProvider, ((previous, next) {
+    //   if (!next.hasError) {
+    //     const Loading();
+    //   }
+    // }));
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -56,14 +54,9 @@ class MyHomePage extends ConsumerWidget {
                       ref.read(counterNotifierProvider.notifier).increment();
                     },
                     child: const Text("Boutton plus")),
-                Consumer(
-                  builder: (context, ref, _) {
-                    final minus = ref.watch(counterNotifierProvider);
-                    return Text(
-                      '$minus',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    );
-                  },
+                Text(
+                  '${ref.watch(counterNotifierProvider)}',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 ElevatedButton(
                     onPressed: () {
@@ -84,14 +77,9 @@ class MyHomePage extends ConsumerWidget {
                       ref.read(additionNotifierProvider.notifier).increment();
                     },
                     child: const Text("Boutton plus")),
-                Consumer(
-                  builder: (context, ref, _) {
-                    final addition = ref.watch(additionNotifierProvider);
-                    return Text(
-                      '$addition',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    );
-                  },
+                Text(
+                  '${ref.watch(additionNotifierProvider)}',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 ElevatedButton(
                     onPressed: () {
@@ -104,29 +92,22 @@ class MyHomePage extends ConsumerWidget {
             const Text(
               'Opération de Minus & Addition:',
             ),
-            Consumer(builder: (context, ref, _) {
-              final add = ref.watch(getAdditionProvider);
-              return Text("$add");
-            }),
+            Text('${ref.watch(getAdditionProvider)}'),
             const Gap(20),
             const Text(
               'Async :',
             ),
-            Consumer(builder: (context, ref, _) {
-              return ref.watch(asynProvider).when(
-                  data: (data) {
-                    return Text('$data');
-                  },
-                  error: (error, stackTrace) => const Text("C'est une erreur"),
-                  loading: () => const Loading());
-            }),
-            Consumer(builder: (_, ref, __) {
-              return ElevatedButton(
-                  onPressed: () {
-                    ref.read(asynProvider.notifier).addition();
-                  },
-                  child: const Text("Result"));
-            }),
+            ref.watch(asynProvider).when(
+                data: (data) {
+                  return Text('$data');
+                },
+                error: (error, stackTrace) => const Text("C'est une erreur"),
+                loading: () => const Loading()),
+            ElevatedButton(
+                onPressed: () {
+                  ref.read(asynProvider.notifier).addition();
+                },
+                child: const Text("Result"))
           ],
         ),
       ),
