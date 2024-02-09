@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:projet_riverpod/async.dart';
 import 'package:projet_riverpod/counterNotifier.dart';
 
 void main() {
@@ -99,6 +100,15 @@ class MyHomePage extends ConsumerWidget {
               final addition = ref.watch(counterNotifierProvider2);
               final add = minus + addition;
               return Text("$add");
+            }),
+            const Gap(20),
+            const Text(
+              'Async :',
+            ),
+            Consumer(builder: (context, ref, _) {
+              final addasync = ref.watch(asynProvider);
+
+              return Text("$addasync");
             })
           ],
         ),
