@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:projet_riverpod/async.dart';
 import 'package:projet_riverpod/counterNotifier.dart';
+import 'package:projet_riverpod/loading.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -72,12 +73,12 @@ class MyHomePage extends ConsumerWidget {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      ref.read(counterNotifierProvider2.notifier).increment2();
+                      ref.read(additionNotifierProvider.notifier).increment();
                     },
                     child: const Text("Boutton plus")),
                 Consumer(
                   builder: (context, ref, _) {
-                    final addition = ref.watch(counterNotifierProvider2);
+                    final addition = ref.watch(additionNotifierProvider);
                     return Text(
                       '$addition',
                       style: Theme.of(context).textTheme.headlineMedium,
@@ -86,7 +87,7 @@ class MyHomePage extends ConsumerWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      ref.read(counterNotifierProvider2.notifier).decrement2();
+                      ref.read(additionNotifierProvider.notifier).decrement();
                     },
                     child: const Text("Boutton moin")),
               ],
@@ -96,9 +97,7 @@ class MyHomePage extends ConsumerWidget {
               'Opération de Minus & Addition:',
             ),
             Consumer(builder: (context, ref, _) {
-              final minus = ref.watch(counterNotifierProvider);
-              final addition = ref.watch(counterNotifierProvider2);
-              final add = minus + addition;
+              final add = ref.watch(getAdditionProvider);
               return Text("$add");
             }),
             const Gap(20),
@@ -106,16 +105,20 @@ class MyHomePage extends ConsumerWidget {
               'Async :',
             ),
             Consumer(builder: (context, ref, _) {
-              final addasync = ref.watch(asynProvider);
-
-              return Text("$addasync");
+              return ref.watch(asynProvider).when(
+                  data: (data) {
+                    final add1 = ref.watch(getAdditionProvider);
+                    return Text('$add1');
+                  },
+                  error: (error, StackTrace) => const Text("C'est une erreur"),
+                  loading: () => const Loading());
             })
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(counterNotifierProvider2.notifier).increment2();
+          ref.read(counterNotifierProvider.notifier).increment();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
