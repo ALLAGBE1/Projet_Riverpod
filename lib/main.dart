@@ -71,12 +71,12 @@ class MyHomePage extends ConsumerWidget {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      ref.read(counterNotifierProvider2.notifier).increment2();
+                      ref.read(additionNotifierProvider.notifier).increment();
                     },
                     child: const Text("Boutton plus")),
                 Consumer(
                   builder: (context, ref, _) {
-                    final addition = ref.watch(counterNotifierProvider2);
+                    final addition = ref.watch(additionNotifierProvider);
                     return Text(
                       '$addition',
                       style: Theme.of(context).textTheme.headlineMedium,
@@ -85,7 +85,7 @@ class MyHomePage extends ConsumerWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      ref.read(counterNotifierProvider2.notifier).decrement2();
+                      ref.read(additionNotifierProvider.notifier).decrement();
                     },
                     child: const Text("Boutton moin")),
               ],
@@ -95,9 +95,7 @@ class MyHomePage extends ConsumerWidget {
               'Opération de Minus & Addition:',
             ),
             Consumer(builder: (context, ref, _) {
-              final minus = ref.watch(counterNotifierProvider);
-              final addition = ref.watch(counterNotifierProvider2);
-              final add = minus + addition;
+              final add = ref.watch(getAdditionProvider);
               return Text("$add");
             })
           ],
@@ -105,7 +103,7 @@ class MyHomePage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(counterNotifierProvider2.notifier).increment2();
+          ref.read(counterNotifierProvider.notifier).increment();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

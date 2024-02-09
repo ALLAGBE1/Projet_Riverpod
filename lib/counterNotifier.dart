@@ -17,19 +17,11 @@ class MyNotifier extends Notifier<int> {
 
 final counterNotifierProvider = NotifierProvider<MyNotifier, int>(MyNotifier.new);
 
-class MyNotifier2 extends Notifier<int> {
-  @override
-  int build() {
-    return 0;
-  }
+final additionNotifierProvider = NotifierProvider<MyNotifier, int>(MyNotifier.new);
 
-  void increment2() {
-    state++;
-  }
-
-  void decrement2() {
-    state--;
-  }
-}
-
-final counterNotifierProvider2 = NotifierProvider<MyNotifier2, int>(MyNotifier2.new);
+final getAdditionProvider = Provider<int>((ref) {
+  final counter1 = ref.watch(counterNotifierProvider);
+  final counter2 = ref.watch(additionNotifierProvider);
+  
+  return counter1 + counter2;
+});
