@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:projet_riverpod/counterNotifier.dart';
 
 void main() {
@@ -35,28 +36,76 @@ class MyHomePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Minus:',
             ),
-            Consumer(
-              builder: (context, ref, _) {
-                final counter = ref.watch(counterNotifierProvider);
-                return Text(
-                  '$counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                );
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(counterNotifierProvider.notifier).increment();
+                    },
+                    child: const Text("Boutton plus")),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final minus = ref.watch(counterNotifierProvider);
+                    return Text(
+                      '$minus',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    );
+                  },
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(counterNotifierProvider.notifier).decrement();
+                    },
+                    child: const Text("Boutton moin")),
+              ],
             ),
-            ElevatedButton(
-                onPressed: () {
-                  ref.read(counterNotifierProvider.notifier).decrement();
-                },
-                child: const Text("Boutton moin"))
+            const Gap(20),
+            const Text(
+              'Addition:',
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(counterNotifierProvider2.notifier).increment2();
+                    },
+                    child: const Text("Boutton plus")),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final addition = ref.watch(counterNotifierProvider2);
+                    return Text(
+                      '$addition',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    );
+                  },
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(counterNotifierProvider2.notifier).decrement2();
+                    },
+                    child: const Text("Boutton moin")),
+              ],
+            ),
+            const Gap(20),
+            const Text(
+              'Opération de Minus & Addition:',
+            ),
+            Consumer(builder: (context, ref, _) {
+              final minus = ref.watch(counterNotifierProvider);
+              final addition = ref.watch(counterNotifierProvider2);
+              final add = minus + addition;
+              return Text("$add");
+            })
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(counterNotifierProvider.notifier).increment();
+          ref.read(counterNotifierProvider2.notifier).increment2();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
