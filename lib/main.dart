@@ -46,6 +46,11 @@ class MyHomePage extends ConsumerWidget {
                 );
               },
             ),
+            ElevatedButton(
+                onPressed: () {
+                  ref.read(counterNotifierProvider.notifier).decrement();
+                },
+                child: const Text("Boutton moin"))
           ],
         ),
       ),

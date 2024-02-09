@@ -7,6 +7,10 @@ class MyNotifier extends Notifier<int> {
   }
 
   void increment() {
+    state++;
+  }
+
+  void decrement() {
     state--;
   }
 }
