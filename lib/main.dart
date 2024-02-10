@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
+import 'package:projet_riverpod/async.dart';
 import 'package:projet_riverpod/counterNotifier.dart';
+import 'package:projet_riverpod/loading.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -23,11 +26,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // ref.listen(asynProvider, ((previous, next) {
+    //   if (!next.hasError) {
+    //     const Loading();
+    //   }
+    // }));
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -35,30 +44,79 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Minus:',
             ),
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, _) {
-                final counter = ref.watch(counterNotifierProvider);
-                return Text(
-                  '$counter',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(counterNotifierProvider.notifier).increment();
+                    },
+                    child: const Text("Boutton plus")),
+                Text(
+                  '${ref.watch(counterNotifierProvider)}',
                   style: Theme.of(context).textTheme.headlineMedium,
-                );
-              },
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(counterNotifierProvider.notifier).decrement();
+                    },
+                    child: const Text("Boutton moin")),
+              ],
             ),
+            const Gap(20),
+            const Text(
+              'Addition:',
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(additionNotifierProvider.notifier).increment();
+                    },
+                    child: const Text("Boutton plus")),
+                Text(
+                  '${ref.watch(additionNotifierProvider)}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(additionNotifierProvider.notifier).decrement();
+                    },
+                    child: const Text("Boutton moin")),
+              ],
+            ),
+            const Gap(20),
+            const Text(
+              'Opération de Minus & Addition:',
+            ),
+            Text('${ref.watch(getAdditionProvider)}'),
+            const Gap(20),
+            const Text(
+              'Async :',
+            ),
+            ref.watch(asynProvider).when(
+                data: (data) {
+                  return Text('$data');
+                },
+                error: (error, stackTrace) => const Text("C'est une erreur"),
+                loading: () => const Loading()),
+            ElevatedButton(
+                onPressed: () {
+                  ref.read(asynProvider.notifier).addition();
+                },
+                child: const Text("Result"))
           ],
         ),
       ),
-      floatingActionButton: Consumer(
-        builder: (BuildContext context, WidgetRef ref, ___) {
-          return FloatingActionButton(
-            onPressed: () {
-              ref.read(counterNotifierProvider.notifier).increment();
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          );
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref.read(counterNotifierProvider.notifier).increment();
         },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
