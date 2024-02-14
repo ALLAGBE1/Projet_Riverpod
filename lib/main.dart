@@ -233,13 +233,21 @@ class MyHomePage extends ConsumerWidget {
             const Text(
               'Async :',
             ),
-            // ref.watch(asynProvider).when(
-            ref.watch(asynProvider).when(
+            ref.watch(activityProvider).when(
                 data: (data) {
                   return Text('$data');
                 },
                 error: (error, stackTrace) => const Text("C'est une erreur"),
                 loading: () => const Loading()),
+            // Consumer(builder: (_, ref, __) {
+            //   final tres = ref.watch(activityProvider);
+            //   return switch (tres) {
+            //     AsyncData(:final value) => Text('$value'),
+            //     AsyncError() => const Text('Oops, something unexpected happened'),
+            //     _ => const CircularProgressIndicator(),
+            //   };
+            // }),
+
             ElevatedButton(
                 onPressed: () {
                   ref.read(asynProvider.notifier).addition();
