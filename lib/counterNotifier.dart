@@ -26,6 +26,8 @@ final getAdditionProvider = Provider<int>((ref) {
   return counter1 + counter2;
 });
 
-// final familyProvider = Provider.family<MyNotifier, int>((ref, n) {
-//   return null;
-// });
+
+final numberProviderFamily = Provider.family<int, int>((ref, n) {
+  final additionResult = ref.watch(getAdditionProvider);
+  return n * additionResult;
+});

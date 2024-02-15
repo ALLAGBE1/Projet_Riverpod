@@ -252,7 +252,15 @@ class MyHomePage extends ConsumerWidget {
                 onPressed: () {
                   ref.read(asynProvider.notifier).addition();
                 },
-                child: const Text("Result"))
+                child: const Text("Result")),
+            Row(
+              children: [
+                const Text("Family"),
+                Text('${ref.watch(numberProviderFamily(10))}'),
+                Text('${ref.watch(numberProviderFamily(100))}'),
+                Text('${ref.watch(numberProviderFamily(1000))}'),
+              ],
+            )
           ],
         ),
       ),
